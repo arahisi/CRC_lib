@@ -57,9 +57,8 @@ void CRCTYPE##_InitializeSET(CRCTYPE##_SET* set, CRCTYPE ipolynominal, CRCTYPE i
 	CRCTYPE##_GenerateTable(set->Table, ipolynominal);\
 	set->Initial = initial;\
 }\
-CRCTYPE CRCTYPE##_CRC(const CRCTYPE##_SET* set, const void* data, CRCTYPE crc) {\
-	const uint8_t *p = (const uint8_t*) data;\
-	return crc = set->Table[crc ^ *p];\
+CRCTYPE CRCTYPE##_CRC(const CRCTYPE##_SET* set, uint8_t byte, CRCTYPE crc) {\
+	return crc = set->Table[crc ^ byte];\
 }\
 CRCTYPE CRCTYPE##_ContinueCRC(const CRCTYPE##_SET* set, const void* data, size_t size, CRCTYPE crc) {\
 	const uint8_t *p = (const uint8_t*) data;\
@@ -76,7 +75,7 @@ CRCTYPE CRCTYPE##_GetCRC(const CRCTYPE##_SET* set, const void* data, size_t size
 #else
 #define CRC_LIB_DEFINE_FUNCTION(CRCTYPE)\
 extern void CRCTYPE##_InitializeSET(CRCTYPE##_SET* set, CRCTYPE ipolynominal, CRCTYPE initial);\
-extern CRCTYPE CRCTYPE##_CRC(const CRCTYPE##_SET* set, const void* data, CRCTYPE crc);\
+extern CRCTYPE CRCTYPE##_CRC(const CRCTYPE##_SET* set, uint8_t byte, CRCTYPE crc);\
 extern CRCTYPE CRCTYPE##_ContinueCRC(const CRCTYPE##_SET* set, const void* data, size_t size, CRCTYPE crc);\
 extern CRCTYPE CRCTYPE##_GetCRC(const CRCTYPE##_SET* set, const void* data, size_t size);
 #endif
