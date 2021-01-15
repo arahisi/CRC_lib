@@ -1,9 +1,15 @@
 {
     "name": "CRC_lib",
     "version": "1.0.0",
+    "frameworks": "*",
     "repository":
     {
         "type": "git",
         "url": "https://github.com/arahisi/CRC_lib.git"
+    },
+    "authors":
+    {
+    "name": "Shoji Yamamoto",
+    "email": "greatshoji@yahoo.co.jp"
     }
 }
