@@ -95,7 +95,7 @@ CRC_LIB_DEFINE_FUNCTION(uint32_t)
 #define CRC_LIB_CRC(CRCTYPE, set, dat, crc) CRC_LIB_##CRCTYPE##_CRC(set, data, crc)
 #define CRC_LIB_ContinueCRC(CRCTYPE, set, data, size, crc) CRC_LIB_##CRCTYPE##_ContinueCRC(set, data, size, crc)
 #define CRC_LIB_GetCRC(CRCTYPE, set, data, size) CRC_LIB_##CRCTYPE##_GetCRC(set, data, size)
-#
+
 #ifdef __cplusplus
 }
 #endif
