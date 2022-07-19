@@ -81,6 +81,8 @@ CRCTYPE CRC_LIB_##CRCTYPE##_GetCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, cons
 	extern CRCTYPE CRC_LIB_##CRCTYPE##_GetCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size);
 #endif
 
+#if _CRC_LIB_
+
 CRC_LIB_DEFINE_TABLESET(uint8_t)
 CRC_LIB_DEFINE_TABLESET(uint16_t)
 CRC_LIB_DEFINE_TABLESET(uint32_t)
@@ -89,12 +91,16 @@ CRC_LIB_DEFINE_FUNCTION(uint8_t)
 CRC_LIB_DEFINE_FUNCTION(uint16_t)
 CRC_LIB_DEFINE_FUNCTION(uint32_t)
 
+#else
 
 #define CRC_LIB_TABLESET(CRCTYPE) CRC_LIB_##CRCTYPE##_TABLESET
 #define CRC_LIB_Initialize(CRCTYPE, set, ipolynominal, initial) CRC_LIB_##CRCTYPE##_Initialize(set, ipolynominal, initial)
 #define CRC_LIB_CRC(CRCTYPE, set, dat, crc) CRC_LIB_##CRCTYPE##_CRC(set, data, crc)
 #define CRC_LIB_ContinueCRC(CRCTYPE, set, data, size, crc) CRC_LIB_##CRCTYPE##_ContinueCRC(set, data, size, crc)
 #define CRC_LIB_GetCRC(CRCTYPE, set, data, size) CRC_LIB_##CRCTYPE##_GetCRC(set, data, size)
+
+#endif
+
 
 #ifdef __cplusplus
 }
