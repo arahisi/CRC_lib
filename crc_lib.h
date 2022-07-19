@@ -81,11 +81,11 @@ CRCTYPE CRC_LIB_##CRCTYPE##_GetCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, cons
 	extern CRCTYPE CRC_LIB_##CRCTYPE##_GetCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size);
 #endif
 
-#if _CRC_LIB_
-
 CRC_LIB_DEFINE_TABLESET(uint8_t)
 CRC_LIB_DEFINE_TABLESET(uint16_t)
 CRC_LIB_DEFINE_TABLESET(uint32_t)
+
+#if _CRC_LIB_
 
 CRC_LIB_DEFINE_FUNCTION(uint8_t)
 CRC_LIB_DEFINE_FUNCTION(uint16_t)
