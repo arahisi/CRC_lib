@@ -85,13 +85,11 @@ CRC_LIB_DEFINE_TABLESET(uint8_t)
 CRC_LIB_DEFINE_TABLESET(uint16_t)
 CRC_LIB_DEFINE_TABLESET(uint32_t)
 
-#if _CRC_LIB_
-
 CRC_LIB_DEFINE_FUNCTION(uint8_t)
 CRC_LIB_DEFINE_FUNCTION(uint16_t)
 CRC_LIB_DEFINE_FUNCTION(uint32_t)
 
-#else
+#if !_CRC_LIB_
 
 #define CRC_LIB_TABLESET(CRCTYPE) CRC_LIB_##CRCTYPE##_TABLESET
 #define CRC_LIB_Initialize(CRCTYPE, set, ipolynominal, initial) CRC_LIB_##CRCTYPE##_Initialize(set, ipolynominal, initial)
