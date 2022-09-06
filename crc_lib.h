@@ -57,7 +57,7 @@ void CRC_LIB_##CRCTYPE##_Initialize(CRC_LIB_##CRCTYPE##_TABLESET* set, CRCTYPE i
 	CRC_LIB_##CRCTYPE##_GenerateTable(set->Table, ipolynominal);\
 	set->Initial = initial;\
 }\
-CRCTYPE CRC_LIB_##CRCTYPE##_CRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const uint8_t value, CRCTYPE crc) {\
+CRCTYPE CRC_LIB_##CRCTYPE##_CRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, uint8_t value, CRCTYPE crc) {\
 	crc = set->Table[(0xFF & crc) ^ value] ^ (crc >> 8);\
 	return crc;\
 }\
