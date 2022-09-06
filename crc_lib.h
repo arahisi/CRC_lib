@@ -57,8 +57,8 @@ void CRC_LIB_##CRCTYPE##_Initialize(CRC_LIB_##CRCTYPE##_TABLESET* set, CRCTYPE i
 	CRC_LIB_##CRCTYPE##_GenerateTable(set->Table, ipolynominal);\
 	set->Initial = initial;\
 }\
-CRCTYPE CRC_LIB_##CRCTYPE##_CRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, CRCTYPE crc) {\
-	crc = set->Table[(0xFF & crc) ^ *((const uint8_t*)data)] ^ (crc >> 8);\
+CRCTYPE CRC_LIB_##CRCTYPE##_CRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const uint8_t value, CRCTYPE crc) {\
+	crc = set->Table[(0xFF & crc) ^ value] ^ (crc >> 8);\
 	return crc;\
 }\
 CRCTYPE CRC_LIB_##CRCTYPE##_ContinueCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size, CRCTYPE crc) {\
@@ -76,7 +76,7 @@ CRCTYPE CRC_LIB_##CRCTYPE##_GetCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, cons
 #else
 #define CRC_LIB_DEFINE_FUNCTION(CRCTYPE)\
 	extern void CRC_LIB_##CRCTYPE##_Initialize(CRC_LIB_##CRCTYPE##_TABLESET* set, CRCTYPE ipolynominal, CRCTYPE initial);\
-	extern CRCTYPE CRC_LIB_##CRCTYPE##_CRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data,  CRCTYPE crc);\
+	extern CRCTYPE CRC_LIB_##CRCTYPE##_CRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, uint8_t value,  CRCTYPE crc);\
 	extern CRCTYPE CRC_LIB_##CRCTYPE##_ContinueCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size, CRCTYPE crc);\
 	extern CRCTYPE CRC_LIB_##CRCTYPE##_GetCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size);
 #endif
@@ -91,7 +91,7 @@ CRC_LIB_DEFINE_FUNCTION(uint32_t)
 
 #define CRC_LIB_TABLESET(CRCTYPE) CRC_LIB_##CRCTYPE##_TABLESET
 #define CRC_LIB_Initialize(CRCTYPE, set, ipolynominal, initial) CRC_LIB_##CRCTYPE##_Initialize(set, ipolynominal, initial)
-#define CRC_LIB_CRC(CRCTYPE, set, data, crc) CRC_LIB_##CRCTYPE##_CRC(set, data, crc)
+#define CRC_LIB_CRC(CRCTYPE, set, value, crc) CRC_LIB_##CRCTYPE##_CRC(set, value, crc)
 #define CRC_LIB_ContinueCRC(CRCTYPE, set, data, size, crc) CRC_LIB_##CRCTYPE##_ContinueCRC(set, data, size, crc)
 #define CRC_LIB_GetCRC(CRCTYPE, set, data, size) CRC_LIB_##CRCTYPE##_GetCRC(set, data, size)
 
