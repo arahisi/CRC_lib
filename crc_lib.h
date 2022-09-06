@@ -64,7 +64,7 @@ CRCTYPE CRC_LIB_##CRCTYPE##_CRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const u
 CRCTYPE CRC_LIB_##CRCTYPE##_ContinueCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size, CRCTYPE crc) {\
 	const uint8_t *p = (const uint8_t*) data;\
 	while (size) {\
-		crc = CRC_LIB_##CRCTYPE##_CRC(set, p, crc);\
+		crc = CRC_LIB_##CRCTYPE##_CRC(set, *p, crc);\
 		p++;\
 		size--;\
 	}\
