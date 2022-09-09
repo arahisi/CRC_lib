@@ -37,17 +37,17 @@ typedef struct {\
 
 #if _CRC_LIB_
 #define CRC_LIB_DEFINE_FUNCTION(CRCTYPE)\
-static void CRC_LIB_##CRCTYPE##_GenerateTable(CRCTYPE table[256], CRCTYPE ipolynominal) {\
+static void CRC_LIB_##CRCTYPE##_GenerateTable(CRCTYPE table[256], CRCTYPE polynominal) {\
 	int dividend;\
 	CRCTYPE remainder;\
     int bit;\
 	for (dividend = 0; dividend < 256; dividend++) {\
 		remainder = dividend << (8 * (sizeof(CRCTYPE) - 1));\
 		for (bit = 0; bit < 8; bit++) {\
-			if (remainder & 1) {\
-				remainder = (remainder >> 1) ^ ipolynominal;\
+			if (remainder & (CRCTYPE)(1UL << ((8 * sizeof(CRCTYPE)) - 1))) {\
+				remainder = (remainder << 1) ^ polynominal;\
 			} else {\
-				remainder = (remainder >> 1);\
+				remainder = (remainder << 1);\
 			}\
 		}\
 		table[dividend] = remainder;\
