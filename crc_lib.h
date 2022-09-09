@@ -41,12 +41,11 @@ typedef struct {\
 #define CRC_LIB_DEFINE_FUNCTION(CRCTYPE)\
 static void CRC_LIB_##CRCTYPE##_GenerateTable(CRCTYPE table[256], CRCTYPE polynominal) {\
 	int dividend;\
-	CRCTYPE remainder;\
-	const CRCTYPE top_bit  = (CRCTYPE)((CRCTYPE)1 << ((8 * sizeof(CRCTYPE)) - 1));\
 	for (dividend = 0; dividend < 256; dividend++) {\
     	int bit;\
-		remainder = dividend;/*remainder = dividend << ((8 * sizeof(CRCTYPE)) - 8)*/;\
+		CRCTYPE remainder = dividend << ((8 * sizeof(CRCTYPE)) - 8);\
 		for (bit = 0; bit < 8; bit++) {\
+			const CRCTYPE top_bit  = (CRCTYPE)((CRCTYPE)1 << ((8 * sizeof(CRCTYPE)) - 1));\
 			if (remainder & top_bit) {\
 				remainder = (CRCTYPE)(remainder << 1) ^ (CRCTYPE)polynominal;\
 			} else {\
