@@ -43,6 +43,7 @@ static void CRC_LIB_##CRCTYPE##_GenerateTable(CRCTYPE table[256], CRCTYPE polyno
 	int dividend;\
 	CRCTYPE remainder;\
 	const CRCTYPE top_bit  = (CRCTYPE)((CRCTYPE)1 << ((8 * sizeof(CRCTYPE)) - 1));\
+	printf("%X\n", top_bit);\
 	for (dividend = 0; dividend < 256; dividend++) {\
     	int bit;\
 		remainder = dividend << (8 * (sizeof(CRCTYPE) - 1));\
