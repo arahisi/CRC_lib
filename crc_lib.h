@@ -58,7 +58,7 @@ void CRC_LIB_##CRCTYPE##_Initialize(CRC_LIB_##CRCTYPE##_TABLESET* set, CRCTYPE i
 	set->Initial = initial;\
 }\
 CRCTYPE CRC_LIB_##CRCTYPE##_CRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, uint8_t value, CRCTYPE crc) {\
-	crc = set->Table[(0xFF & (crc >> (8 * sizeof(CRCTYPE))))) ^ value] ^ ((crc << 8) & (CRCTYPE)(~(CRCTYPE)0xFF));\
+	crc = set->Table[((CRCTYPE)(crc >> (8 * sizeof(CRCTYPE)))) ^ value] ^ ((crc << 8) & (CRCTYPE)(~(CRCTYPE)0xFF));\
 	return crc;\
 }\
 CRCTYPE CRC_LIB_##CRCTYPE##_ContinueCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size, CRCTYPE crc) {\
