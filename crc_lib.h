@@ -29,6 +29,8 @@ extern "C" {
 #include <stdio.h>
 #include <stdint.h>
 
+// 20220810A
+
 #define CRC_LIB_DEFINE_TABLESET(CRCTYPE)\
 typedef struct {\
 	CRCTYPE Table[256];\
