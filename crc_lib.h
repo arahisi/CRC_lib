@@ -42,7 +42,7 @@ static void CRC_LIB_##CRCTYPE##_GenerateTable(CRCTYPE table[256], CRCTYPE ipolyn
 	CRCTYPE remainder;\
     int bit;\
 	for (dividend = 0; dividend < 256; dividend++) {\
-		remainder = dividend;\
+		remainder = dividend << (8 * (sizeof(CRCTYPE) - 1));\
 		for (bit = 0; bit < 8; bit++) {\
 			if (remainder & 1) {\
 				remainder = (remainder >> 1) ^ ipolynominal;\
