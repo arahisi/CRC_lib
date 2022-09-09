@@ -44,10 +44,10 @@ static void CRC_LIB_##CRCTYPE##_GenerateTable(CRCTYPE table[256], CRCTYPE polyno
 	for (dividend = 0; dividend < 256; dividend++) {\
 		remainder = dividend << (8 * (sizeof(CRCTYPE) - 1));\
 		for (bit = 0; bit < 8; bit++) {\
-			if (remainder & (CRCTYPE)(1UL << ((8 * sizeof(CRCTYPE)) - 1))) {\
-				remainder = (remainder << 1) ^ polynominal;\
+			if (remainder & (CRCTYPE)((CRCTYPE)1 << ((8 * sizeof(CRCTYPE)) - 1))) {\
+				remainder = (CRCTYPE)(remainder << 1) ^ (CRCTYPE)polynominal;\
 			} else {\
-				remainder = (remainder << 1);\
+				remainder = (CRCTYPE)(remainder << 1);\
 			}\
 		}\
 		table[dividend] = remainder;\
@@ -58,7 +58,7 @@ void CRC_LIB_##CRCTYPE##_Initialize(CRC_LIB_##CRCTYPE##_TABLESET* set, CRCTYPE i
 	set->Initial = initial;\
 }\
 CRCTYPE CRC_LIB_##CRCTYPE##_CRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, uint8_t value, CRCTYPE crc) {\
-	crc = set->Table[((crc >> (8 * sizeof(CRCTYPE))) ^ value) & 0xFF] ^ (crc << 8);\
+	crc = set->Table[((crc >> (8 * (sizeof(CRCTYPE)-1))) ^ value) & 0xFF] ^ (crc << 8);\
 	return crc;\
 }\
 CRCTYPE CRC_LIB_##CRCTYPE##_ContinueCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size, CRCTYPE crc) {\
