@@ -47,10 +47,9 @@ static void CRC_LIB_##CRCTYPE##_GenerateTable(CRCTYPE table[256], CRCTYPE polyno
 		remainder <<= ((8 * sizeof(CRCTYPE)) - 8);\
 		for (bit = 0; bit < 8; bit++) {\
 			const CRCTYPE top_bit  = (CRCTYPE)((CRCTYPE)1 << ((8 * sizeof(CRCTYPE)) - 1));\
+			remainder <<= 1;\
 			if (remainder & top_bit) {\
-				remainder = (CRCTYPE)(remainder << 1) ^ (CRCTYPE)polynominal;\
-			} else {\
-				remainder = (CRCTYPE)(remainder << 1);\
+				remainder ^= (CRCTYPE)polynominal;\
 			}\
 		}\
 		table[dividend] = remainder;\
