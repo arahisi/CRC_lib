@@ -57,7 +57,7 @@ static void CRC_LIB_##CRCTYPE##_GenerateTable(CRCTYPE table[256], CRCTYPE polyno
 		table[dividend] = remainder;\
 	}\
 }\
-static void CRC_LIB_##CRCTYPE##_GenerateRefTable(CRCTYPE table[256], CRCTYPE ipolynominal) {\
+static void CRC_LIB_##CRCTYPE##_RefGenerateTable(CRCTYPE table[256], CRCTYPE ipolynominal) {\
 	int dividend;\
 	for (dividend = 0; dividend <= 0xFF; dividend++) {\
     	int bit;\
@@ -77,8 +77,8 @@ void CRC_LIB_##CRCTYPE##_Initialize(CRC_LIB_##CRCTYPE##_TABLESET* set, CRCTYPE p
 	CRC_LIB_##CRCTYPE##_GenerateTable(set->Table, polynominal);\
 	set->Initial = initial;\
 }\
-void CRC_LIB_##CRCTYPE##_InitializeRef(CRC_LIB_##CRCTYPE##_TABLESET* set, CRCTYPE ipolynominal, CRCTYPE initial) {\
-	CRC_LIB_##CRCTYPE##_GenerateRefTable(set->Table, ipolynominal);\
+void CRC_LIB_##CRCTYPE##_RefInitialize(CRC_LIB_##CRCTYPE##_TABLESET* set, CRCTYPE ipolynominal, CRCTYPE initial) {\
+	CRC_LIB_##CRCTYPE##_RefGenerateTable(set->Table, ipolynominal);\
 	set->Initial = initial;\
 }\
 CRCTYPE CRC_LIB_##CRCTYPE##_CRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, uint8_t value, CRCTYPE crc) {\
@@ -98,7 +98,7 @@ CRCTYPE CRC_LIB_##CRCTYPE##_ContinueCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set,
 	}\
 	return crc;\
 }\
-CRCTYPE CRC_LIB_##CRCTYPE##_ContinueRefCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size, CRCTYPE crc) {\
+CRCTYPE CRC_LIB_##CRCTYPE##_RefContinueCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size, CRCTYPE crc) {\
 	const uint8_t *p = (const uint8_t*) data;\
 	while (size) {\
 		crc = CRC_LIB_##CRCTYPE##_RefCRC(set, *p, crc);\
@@ -110,20 +110,20 @@ CRCTYPE CRC_LIB_##CRCTYPE##_ContinueRefCRC(const CRC_LIB_##CRCTYPE##_TABLESET* s
 CRCTYPE CRC_LIB_##CRCTYPE##_GetCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size) {\
 	return CRC_LIB_##CRCTYPE##_ContinueCRC(set, data, size, set->Initial);\
 }\
-CRCTYPE CRC_LIB_##CRCTYPE##_GetRefCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size) {\
-	return CRC_LIB_##CRCTYPE##_ContinueRefCRC(set, data, size, set->Initial);\
+CRCTYPE CRC_LIB_##CRCTYPE##_RefGetCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size) {\
+	return CRC_LIB_##CRCTYPE##_RefContinueCRC(set, data, size, set->Initial);\
 }
 #else
 #define CRC_LIB_DEFINE_FUNCTION(CRCTYPE)\
 	extern CRCTYPE CRC_LIB_##CRCTYPE##_Reflect(CRCTYPE value);\
 	extern void CRC_LIB_##CRCTYPE##_Initialize(CRC_LIB_##CRCTYPE##_TABLESET* set, CRCTYPE polynominal, CRCTYPE initial);\
-	extern void CRC_LIB_##CRCTYPE##_InitializeRef(CRC_LIB_##CRCTYPE##_TABLESET* set, CRCTYPE ipolynominal, CRCTYPE initial);\
 	extern CRCTYPE CRC_LIB_##CRCTYPE##_CRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, uint8_t value, CRCTYPE crc);\
-	extern CRCTYPE CRC_LIB_##CRCTYPE##_RefCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, uint8_t value, CRCTYPE crc);\
 	extern CRCTYPE CRC_LIB_##CRCTYPE##_ContinueCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size, CRCTYPE crc);\
-	extern CRCTYPE CRC_LIB_##CRCTYPE##_ContinueRefCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size, CRCTYPE crc);\
 	extern CRCTYPE CRC_LIB_##CRCTYPE##_GetCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size);\
-	extern CRCTYPE CRC_LIB_##CRCTYPE##_GetRefCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size);
+	extern void CRC_LIB_##CRCTYPE##_RefInitialize(CRC_LIB_##CRCTYPE##_TABLESET* set, CRCTYPE ipolynominal, CRCTYPE initial);\
+	extern CRCTYPE CRC_LIB_##CRCTYPE##_RefCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, uint8_t value, CRCTYPE crc);\
+	extern CRCTYPE CRC_LIB_##CRCTYPE##_RefContinueCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size, CRCTYPE crc);\
+	extern CRCTYPE CRC_LIB_##CRCTYPE##_RefGetCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size);
 #endif
 
 CRC_LIB_DEFINE_TABLESET(uint8_t)
@@ -137,13 +137,13 @@ CRC_LIB_DEFINE_FUNCTION(uint32_t)
 #define CRC_LIB_TABLESET(CRCTYPE) CRC_LIB_##CRCTYPE##_TABLESET
 #define CRC_LIB_Reflect(CRCTYPE, value) CRC_LIB_##CRCTYPE##_Reflect(value)
 #define CRC_LIB_Initialize(CRCTYPE, set, polynominal, initial) CRC_LIB_##CRCTYPE##_Initialize(set, polynominal, initial)
-#define CRC_LIB_RefInitialize(CRCTYPE, set, ipolynominal, initial) CRC_LIB_##CRCTYPE##_InitializeRef(set, ipolynominal, initial)
 #define CRC_LIB_CRC(CRCTYPE, set, value, crc) CRC_LIB_##CRCTYPE##_CRC(set, value, crc)
-#define CRC_LIB_RefCRC(CRCTYPE, set, value, crc) CRC_LIB_##CRCTYPE##_RefCRC(set, value, crc)
 #define CRC_LIB_ContinueCRC(CRCTYPE, set, data, size, crc) CRC_LIB_##CRCTYPE##_ContinueCRC(set, data, size, crc)
-#define CRC_LIB_ContinueRefCRC(CRCTYPE, set, data, size, crc) CRC_LIB_##CRCTYPE##_ContinueRefCRC(set, data, size, crc)
 #define CRC_LIB_GetCRC(CRCTYPE, set, data, size) CRC_LIB_##CRCTYPE##_GetCRC(set, data, size)
-#define CRC_LIB_GetRefCRC(CRCTYPE, set, data, size) CRC_LIB_##CRCTYPE##_GetRefCRC(set, data, size)
+#define CRC_LIB_RefInitialize(CRCTYPE, set, ipolynominal, initial) CRC_LIB_##CRCTYPE##_RefInitialize(set, ipolynominal, initial)
+#define CRC_LIB_RefCRC(CRCTYPE, set, value, crc) CRC_LIB_##CRCTYPE##_RefCRC(set, value, crc)
+#define CRC_LIB_RefContinueCRC(CRCTYPE, set, data, size, crc) CRC_LIB_##CRCTYPE##_RefContinueCRC(set, data, size, crc)
+#define CRC_LIB_RefGetCRC(CRCTYPE, set, data, size) CRC_LIB_##CRCTYPE##_RefGetCRC(set, data, size)
 
 #ifdef __cplusplus
 }
