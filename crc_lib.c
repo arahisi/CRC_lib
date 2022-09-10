@@ -24,6 +24,7 @@ DEALINGS IN THE SOFTWARE.
 #undef _CRC_LIB_
 #define _CRC_LIB_ 0
 
+#if 0
 uint8_t CRC_LIB_uint8_t_Reflect(uint8_t x) {
 	x = ((x & 0x55) << 1) | ((x & 0xAA) >> 1);
 	x = ((x & 0x33) << 2) | ((x & 0xCC) >> 2);
@@ -47,3 +48,4 @@ uint32_t CRC_LIB_uint32_t_Reflect(uint32_t x) {
 	x = (x << 16) | (x >> 16);
 	return x;
 }
+#endif

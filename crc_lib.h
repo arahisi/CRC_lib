@@ -29,7 +29,7 @@ extern "C" {
 #include <stdio.h>
 #include <stdint.h>
 
-// 20220810A
+// 20220810B
 
 #define CRC_LIB_DEFINE_TABLESET(CRCTYPE)\
 typedef struct {\
@@ -39,6 +39,15 @@ typedef struct {\
 
 #if _CRC_LIB_
 #define CRC_LIB_DEFINE_FUNCTION(CRCTYPE)\
+CRCTYPE CRC_LIB_##CRCTYPE##_Reflect(CRCTYPE value) {\
+	CRCTYPE ret = 0;\
+	int i;\
+	for (i = 0; i < (8 * sizeof(CRCTYPE)); i++) {\
+		if (value & (((CRCTYPE)1) << i)) {\
+			ret |= ((CRCTYPE)1) << ((8 * sizeof(CRCTYPE) - 1) - i);\
+		}\
+	}\
+}\
 static void CRC_LIB_##CRCTYPE##_GenerateTable(CRCTYPE table[256], CRCTYPE polynominal) {\
 	int dividend;\
 	for (dividend = 0; dividend <= 0xFF; dividend++) {\
