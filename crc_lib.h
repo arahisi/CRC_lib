@@ -47,6 +47,7 @@ CRCTYPE CRC_LIB_##CRCTYPE##_Reflect(CRCTYPE value) {\
 			ret |= ((CRCTYPE)1) << ((8 * sizeof(CRCTYPE) - 1) - i);\
 		}\
 	}\
+	return ret;\
 }\
 static void CRC_LIB_##CRCTYPE##_GenerateTable(CRCTYPE table[256], CRCTYPE polynominal) {\
 	int dividend;\
