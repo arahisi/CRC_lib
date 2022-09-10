@@ -96,7 +96,7 @@ CRCTYPE CRC_LIB_##CRCTYPE##_CRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, uint8_t
 	return crc;\
 }\
 CRCTYPE CRC_LIB_##CRCTYPE##_CRCI(const CRC_LIB_##CRCTYPE##_TABLESET* set, uint8_t value, CRCTYPE crc) {\
-	crc = set->Table[(value ^ (crc & 0xFF)) & 0xFF] ^ (CRCTYPE)(crc >> 8);\
+	crc = set->Table[(value ^ crc) & 0xFF] ^ (CRCTYPE)(crc >> 8);\
 	return crc;\
 }\
 CRCTYPE CRC_LIB_##CRCTYPE##_ContinueCRC(const CRC_LIB_##CRCTYPE##_TABLESET* set, const void* data, size_t size, CRCTYPE crc) {\
