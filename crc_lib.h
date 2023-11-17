@@ -19,8 +19,8 @@
  DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef _CRC_LIB_H_
-#define _CRC_LIB_H_
+#ifndef CRC_LIB_H_
+#define CRC_LIB_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -149,4 +149,4 @@ CRC_LIB_DEFINE_FUNCTION(uint32_t)
 }
 #endif
 
-#endif /* _CRC_LIB_H_ */
+#endif /* CRC_LIB_H_ */
