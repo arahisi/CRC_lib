@@ -19,10 +19,10 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 DEALINGS IN THE SOFTWARE.
 */
 
-#define _CRC_LIB_ 1
+#define CRC_LIB_ 1
 #include "crc_lib.h"
-#undef _CRC_LIB_
-#define _CRC_LIB_ 0
+#undef CRC_LIB_
+#define CRC_LIB_ 0
 
 uint8_t CRC_LIB_uint8_t_Reflect(uint8_t x) {
 	x = ((x & 0x55) << 1) | ((x & 0xAA) >> 1);
